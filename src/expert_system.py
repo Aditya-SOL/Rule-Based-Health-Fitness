@@ -16,9 +16,34 @@ FORWARD_RULES = [
     ({"exercise_days:1-2"}, "recommendation:add_one_day_gradually"),
     ({"exercise_days:3-7"}, "recommendation:include_recovery"),
     ({"exercise_days:3+"}, "recommendation:include_recovery"),
-    # This is a second-level inference: a conclusion from one rule activates another.
+    # Second-level inferences
     ({"recommendation:beginner_walking"}, "reminder:increase_gradually"),
     ({"recommendation:beginner_strength"}, "reminder:rest_between_sessions"),
+    # Safe nutrition strategy rules
+    ({"goal:weight loss"}, "nutrition:weight_loss_conservative"),
+    ({"goal:muscle gain"}, "nutrition:muscle_gain_conservative"),
+    ({"goal:general fitness"}, "nutrition:maintenance_estimate"),
+    ({"goal:healthy eating"}, "nutrition:maintenance_estimate"),
+    ({"sex:prefer not to say"}, "nutrition:weight_based_guidance_only"),
+    # Indian sample meal plan rules
+    ({"diet:vegetarian"}, "meal_plan:vegetarian"),
+    ({"diet:vegan"}, "meal_plan:vegan"),
+    ({"diet:non-vegetarian"}, "meal_plan:non_vegetarian"),
+    ({"diet:non_vegetarian"}, "meal_plan:non_vegetarian"),
+    # Weekly training plan rules
+    ({"goal:weight loss", "activity:low"}, "training:beginner_weight_loss"),
+    ({"goal:muscle gain", "activity:low"}, "training:beginner_muscle_gain"),
+    ({"goal:general fitness"}, "training:general_fitness"),
+    ({"goal:healthy eating"}, "training:general_fitness"),
+    ({"activity:moderate"}, "training:general_fitness"),
+    # Timeline and review rules
+    ({"goal:weight loss"}, "timeline:eight_week_review"),
+    ({"goal:muscle gain"}, "timeline:eight_week_review"),
+    ({"goal:general fitness"}, "timeline:eight_week_review"),
+    ({"goal:healthy eating"}, "timeline:eight_week_review"),
+    # Age-based safety rules
+    ({"age:under 20"}, "safety:under_20_professional_guidance"),
+    ({"age:65+"}, "safety:older_adult_conservative_guidance"),
 ]
 
 EXPLANATIONS = {
@@ -35,6 +60,19 @@ EXPLANATIONS = {
     "recommendation:include_recovery": "Rule applied: exercising 3–7 days per week means including recovery and avoiding sudden increases.",
     "reminder:increase_gradually": "Derived reminder: increase activity gradually.",
     "reminder:rest_between_sessions": "Derived reminder: allow rest between strength sessions.",
+    "nutrition:weight_loss_conservative": "Rule applied: weight loss uses a conservative 10%–15% deficit capped at 500 kcal/day with safe calorie floors.",
+    "nutrition:muscle_gain_conservative": "Rule applied: muscle gain uses a conservative 5%–10% surplus capped at 300 kcal/day rather than an aggressive bulk.",
+    "nutrition:maintenance_estimate": "Rule applied: general fitness and healthy eating use estimated maintenance calories without an artificial deficit or surplus.",
+    "nutrition:weight_based_guidance_only": "Rule applied: when sex is not specified for calorie estimation, weight-based protein and portion guidance are provided without sex-based calorie estimation.",
+    "meal_plan:vegetarian": "Rule applied: vegetarian diet preference generates an Indian meal plan featuring dal, paneer, curd, and legumes.",
+    "meal_plan:vegan": "Rule applied: vegan diet preference generates a plant-based Indian meal plan featuring tofu, soy chunks, dal, nuts, and seeds.",
+    "meal_plan:non_vegetarian": "Rule applied: non-vegetarian diet preference generates an Indian meal plan featuring eggs, fish, chicken, and dal.",
+    "training:beginner_weight_loss": "Rule applied: beginner weight loss pairs walking with full-body bodyweight strength and mobility.",
+    "training:beginner_muscle_gain": "Rule applied: beginner muscle gain initiates 3 full-body strength sessions with progressive overload.",
+    "training:general_fitness": "Rule applied: general fitness targets 150 weekly moderate activity minutes alongside 2 strength sessions.",
+    "timeline:eight_week_review": "Rule applied: an 8-week timeline is recommended with milestone reviews at week 2 and week 4.",
+    "safety:under_20_professional_guidance": "Rule applied: users under 20 require youth-specific guidance from a qualified health professional rather than adult formulas.",
+    "safety:older_adult_conservative_guidance": "Rule applied: older adults (65+) prioritize conservative maintenance, balance, strength, and mobility with professional consultation.",
 }
 
 
