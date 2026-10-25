@@ -4,6 +4,7 @@ Run from the project folder with: python web/server.py
 Then open: http://127.0.0.1:8000
 """
 
+import os
 import sys
 from html import escape
 from pathlib import Path
@@ -206,6 +207,8 @@ def application(environ: dict, start_response):
 
 
 if __name__ == "__main__":
-    print("FitGuide AI website is running at http://127.0.0.1:8000")
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "8000"))
+    print(f"FitGuide AI website is running at http://{host}:{port}")
     print("Press Ctrl+C in this window to stop it.")
-    make_server("127.0.0.1", 8000, application).serve_forever()
+    make_server(host, port, application).serve_forever()
