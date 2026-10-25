@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+
+# Virtual environments and local packages
+.venv/
+venv/
+web/packages/
+web/temp/
+
+# Local runtime output
+work/
+
+# Secrets and local configuration
+.env
+.env.*
